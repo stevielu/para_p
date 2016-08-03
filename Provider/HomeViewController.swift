@@ -130,9 +130,11 @@ class HomeViewController: CustomNavgationbarItemsViewController,UISearchBarDeleg
     
     func didStartSearching() {
         customSearchController.customSearchBar.showsScopeBar = true
-        
-        //customSearchController.customSearchBar.sizeToFit()
+
+        customSearchController.customSearchBar.sizeThatFits(CGSizeMake(200, 25))
         customSearchController.customSearchBar.setShowsCancelButton(true, animated: true)
+        self.navigationItem.titleView = customSearchController.customSearchBar
+        //customSearchController.customSearchBar.frame = CGRectMake(0, 0, 260, 25)
 //        shouldShowSearchResults = true
 //        tblSearchResults.reloadData()
     }
@@ -148,8 +150,9 @@ class HomeViewController: CustomNavgationbarItemsViewController,UISearchBarDeleg
     
     func didTapOnCancelButton() {
         customSearchController.customSearchBar.showsScopeBar = false
-        //customSearchController.customSearchBar.sizeToFit()
+        customSearchController.customSearchBar.sizeThatFits(CGSizeMake(280, 25))
         customSearchController.customSearchBar.setShowsCancelButton(false, animated: true)
+        self.navigationItem.titleView = customSearchController.customSearchBar
 //        shouldShowSearchResults = false
 //        tblSearchResults.reloadData()
     }
