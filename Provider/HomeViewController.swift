@@ -17,13 +17,14 @@ class HomeViewController: CustomNavgationbarItemsViewController,UISearchBarDeleg
     
     //locate elements
     let sortViewContainer = UILabel(frame: CGRectMake(0, 0, globalStyle.screenSize.width, 25))
-    let sortByTypeButton = UIButton(frame: CGRectMake(50, 0, 75, 25))
-    let sortByDateButton = UIButton(frame: CGRectMake(142.5, 0, 75, 25))
-    let sortByLocationButton = UIButton(frame: CGRectMake(235, 0, 75, 25))
+    let sortByTypeButton = UIButton(frame: CGRectMake(0, 0, globalStyle.screenSize.width/3, 25))
+    let sortByDateButton = UIButton(frame: CGRectMake(globalStyle.screenSize.width/3, 0, globalStyle.screenSize.width/3, 25))
+    let sortByLocationButton = UIButton(frame: CGRectMake((globalStyle.screenSize.width/3)*2, 0, globalStyle.screenSize.width/3, 25))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCustomSearchController()
+        //createSearchbar()
         setupSortView()
 
         // Do any additional setup after loading the view.
@@ -35,19 +36,23 @@ class HomeViewController: CustomNavgationbarItemsViewController,UISearchBarDeleg
     }
     
    
+    override func viewWillAppear(animated: Bool) {
+        customSearchController.customSearchBar.sizeToFit()
+        self.navigationItem.titleView = customSearchController.customSearchBar
+    }
     
-//    func createSearchbar(){
-//        searchBarController.searchResultsUpdater = self
-//        searchBarController.dimsBackgroundDuringPresentation = false
-//        searchBarController.hidesNavigationBarDuringPresentation = false
-//        searchBarController.searchBar.tintColor = UIColor.whiteColor()
-//        searchBarController.searchBar.placeholder = "Type in any key words"
-//        self.definesPresentationContext = true
-//        
-//        
-//        
-//        self.navigationItem.titleView = searchBarController.searchBar
-//    }
+    func createSearchbar(){
+        searchBarController.searchResultsUpdater = self
+        searchBarController.dimsBackgroundDuringPresentation = false
+        searchBarController.hidesNavigationBarDuringPresentation = false
+        searchBarController.searchBar.tintColor = UIColor.whiteColor()
+        searchBarController.searchBar.placeholder = "Type in any key words"
+        self.definesPresentationContext = true
+        
+        
+        
+        self.navigationItem.titleView = searchBarController.searchBar
+    }
     
     func setupSortView(){
         
@@ -113,15 +118,16 @@ class HomeViewController: CustomNavgationbarItemsViewController,UISearchBarDeleg
     }
     
     func configureCustomSearchController() {
-        customSearchController = CustomSearchControllerViewController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, 200.0, 25.0), searchBarFont: globalStyle.subTitleFontsize!, searchBarTextColor: globalStyle.subTitleColor, searchBarTintColor: UIColor.whiteColor(),searchbarHeight:25.0,searchbarWidth:280.0)
+        customSearchController = CustomSearchControllerViewController(searchResultsController: self, searchBarFrame: CGRectMake(0.0, 0.0, globalStyle.screenSize.width, 25.0), searchBarFont: globalStyle.subTitleFontsize!, searchBarTextColor: globalStyle.subTitleColor, searchBarTintColor: UIColor.whiteColor(),searchbarHeight:25.0)
         
         customSearchController.customSearchBar.placeholder = "Type in any key words"
         customSearchController.searchResultsUpdater = self
         customSearchController.dimsBackgroundDuringPresentation = false
         customSearchController.hidesNavigationBarDuringPresentation = false
         customSearchController.customSearchBar.showsCancelButton = false
+        customSearchController.customSearchBar.sizeToFit()
         self.definesPresentationContext = true
-        self.navigationItem.titleView = customSearchController.customSearchBar
+        
         customSearchController.customDelegate = self
     }
     
