@@ -35,10 +35,10 @@ class CustomSearchControllerViewController: UISearchController,UISearchBarDelega
     }
     
     //MARK: Initialization
-    init(searchResultsController: UIViewController!, searchBarFrame: CGRect, searchBarFont: UIFont, searchBarTextColor: UIColor, searchBarTintColor: UIColor,searchbarHeight:CGFloat,searchbarWidth:CGFloat) {
+    init(searchResultsController: UIViewController!, searchBarFrame: CGRect, searchBarFont: UIFont, searchBarTextColor: UIColor, searchBarTintColor: UIColor,searchbarHeight:CGFloat) {
         super.init(searchResultsController: searchResultsController)
         
-        configureSearchBar(searchBarFrame, font: searchBarFont, textColor: searchBarTextColor, bgColor: searchBarTintColor,barHeight:searchbarHeight,barWidth: searchbarWidth)
+        configureSearchBar(searchBarFrame, font: searchBarFont, textColor: searchBarTextColor, bgColor: searchBarTintColor,barHeight:searchbarHeight)
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -50,8 +50,8 @@ class CustomSearchControllerViewController: UISearchController,UISearchBarDelega
     }
     
     //MARK: Custom functions
-    func configureSearchBar(frame: CGRect, font: UIFont, textColor: UIColor, bgColor: UIColor,barHeight:CGFloat,barWidth:CGFloat) {
-        customSearchBar = CustomSearchBar(frame: frame, font: font , textColor: textColor,barHeight:barHeight,barWidth:barWidth)
+    func configureSearchBar(frame: CGRect, font: UIFont, textColor: UIColor, bgColor: UIColor,barHeight:CGFloat) {
+        customSearchBar = CustomSearchBar(frame: frame, font: font , textColor: textColor,barHeight:barHeight)
         
         customSearchBar.barTintColor = bgColor
         customSearchBar.tintColor = textColor

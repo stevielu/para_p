@@ -12,7 +12,8 @@ import UIKit
 class globalStyle {
     //width & height
     static var screenSize: CGRect = UIScreen.mainScreen().bounds
-    
+    static let start = screenSize.width/3
+
     //font
     static let subTitleColor = UIColor(netHex:0x666666)
     static let subTitleFontsize = UIFont(name:"Helvetica",size: 10.0)

@@ -13,7 +13,7 @@ class CustomSearchBar: UISearchBar {
     var preferredFont: UIFont!
     var preferredTextColor: UIColor!
     var preferredHeight: CGFloat!
-    var preferredWidth: CGFloat!
+    //var preferredWidth: CGFloat!
     
     override func drawRect(rect: CGRect) {
         // Drawing code
@@ -30,7 +30,7 @@ class CustomSearchBar: UISearchBar {
             searchField.font = preferredFont
             searchField.textColor = preferredTextColor
             searchField.frame.size.height = preferredHeight
-            searchField.frame.size.width = preferredWidth
+            //searchField.frame.size.width = preferredWidth
             searchField.layer.cornerRadius = 12.0
             // Set the background color of the search field.
             //searchField.backgroundColor = barTintColor
@@ -55,14 +55,14 @@ class CustomSearchBar: UISearchBar {
     }
 
     
-    init(frame: CGRect, font: UIFont, textColor: UIColor,barHeight:CGFloat,barWidth:CGFloat) {
+    init(frame: CGRect, font: UIFont, textColor: UIColor,barHeight:CGFloat) {
         super.init(frame: frame)
         
         self.frame = frame
         preferredFont = font
         preferredTextColor = textColor
         preferredHeight = barHeight
-        preferredWidth = barWidth
+        //preferredWidth = barWidth
         
     }
     
