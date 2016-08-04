@@ -10,6 +10,7 @@ import UIKit
 
 class CustomNavgationbarItemsViewController: UIViewController {
     
+    let homeBtn = UIButton()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,10 +24,11 @@ class CustomNavgationbarItemsViewController: UIViewController {
     }
     
     func createHomeButton(){
-        let homeBtn = UIButton()
+        
         homeBtn.setImage(UIImage(named: "HomeBtn.png"), forState: UIControlState.Normal)
         //add function for button
         homeBtn.addTarget(self, action: #selector(self.homeButtonPressed), forControlEvents: UIControlEvents.TouchUpInside)
+        
         //set frame
         homeBtn.frame = CGRectMake(12.5, 12.5, 25, 25)
         

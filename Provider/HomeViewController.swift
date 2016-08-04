@@ -14,6 +14,9 @@ class HomeViewController: CustomNavgationbarItemsViewController,UISearchBarDeleg
     
     var searchBarController = UISearchController(searchResultsController:nil);
     var customSearchController: CustomSearchControllerViewController!
+    var providerTable = CustomTableViewController()
+    
+
     
     //locate elements
     let sortViewContainer = UILabel(frame: CGRectMake(0, 0, globalStyle.screenSize.width, 25))
@@ -23,11 +26,16 @@ class HomeViewController: CustomNavgationbarItemsViewController,UISearchBarDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureCustomSearchController()
-        //createSearchbar()
-        setupSortView()
-
+        
         // Do any additional setup after loading the view.
+        configureCustomSearchController()
+        setupSortView()
+        
+               
+        providerTable.tableView.frame = CGRectMake(0, 25, globalStyle.screenSize.width, globalStyle.screenSize.height)
+        self.view.addSubview(providerTable.tableView)
+
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,6 +48,37 @@ class HomeViewController: CustomNavgationbarItemsViewController,UISearchBarDeleg
         customSearchController.customSearchBar.sizeToFit()
         self.navigationItem.titleView = customSearchController.customSearchBar
     }
+    
+    
+//    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+//        return 1
+//    }
+//    
+//    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return providersArray.count
+//    }
+//    
+//    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        let cell = providerTable.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+//        
+//        let user = providersArray[indexPath.row]
+//        cell.textLabel!.text = user.model
+//        cell.detailTextLabel?.text = user.maker
+//        return cell
+//    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     func createSearchbar(){
         searchBarController.searchResultsUpdater = self
@@ -139,7 +178,9 @@ class HomeViewController: CustomNavgationbarItemsViewController,UISearchBarDeleg
 
         customSearchController.customSearchBar.sizeThatFits(CGSizeMake(200, 25))
         customSearchController.customSearchBar.setShowsCancelButton(true, animated: true)
+        
         self.navigationItem.titleView = customSearchController.customSearchBar
+        self.navigationItem.leftBarButtonItem = nil
         //customSearchController.customSearchBar.frame = CGRectMake(0, 0, 260, 25)
 //        shouldShowSearchResults = true
 //        tblSearchResults.reloadData()
@@ -159,6 +200,7 @@ class HomeViewController: CustomNavgationbarItemsViewController,UISearchBarDeleg
         customSearchController.customSearchBar.sizeThatFits(CGSizeMake(280, 25))
         customSearchController.customSearchBar.setShowsCancelButton(false, animated: true)
         self.navigationItem.titleView = customSearchController.customSearchBar
+        self.navigationItem.leftBarButtonItem =  UIBarButtonItem(customView: self.homeBtn)
 //        shouldShowSearchResults = false
 //        tblSearchResults.reloadData()
     }

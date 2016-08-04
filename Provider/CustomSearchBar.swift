@@ -15,13 +15,14 @@ class CustomSearchBar: UISearchBar {
     var preferredHeight: CGFloat!
     //var preferredWidth: CGFloat!
     
-    override func drawRect(rect: CGRect) {
+    override func layoutSubviews() {
+        super.layoutSubviews()
         // Drawing code
         
         // Find the index of the search field in the search bar subviews.
-        if let index = indexOfSearchFieldInSubviews() {
+        if let textindex = indexOfSearchFieldInSubviews(UITextField) {
             // Access the search field
-            let searchField: UITextField = (subviews[0] ).subviews[index] as! UITextField
+            let searchField: UITextField = (subviews[0] ).subviews[textindex] as! UITextField
             
             // Set its frame.
             //searchField.frame = CGRectMake(5.0, 5.0, frame.size.width - 10.0, frame.size.height - 10.0)
@@ -35,7 +36,11 @@ class CustomSearchBar: UISearchBar {
             // Set the background color of the search field.
             //searchField.backgroundColor = barTintColor
         }
-        
+        if let cancelBtnindex = indexOfSearchFieldInSubviews(UIButton){
+            let cancelBTN: UIButton = (subviews[0] ).subviews[cancelBtnindex] as! UIButton
+            
+            cancelBTN.tintColor = UIColor.whiteColor()
+        }
         
         
 //        let startPoint = CGPointMake(0.0, frame.size.height)
@@ -51,7 +56,7 @@ class CustomSearchBar: UISearchBar {
         
 //        layer.addSublayer(shapeLayer)
         
-        super.drawRect(rect)
+        //super.drawRect(rect)
     }
 
     
@@ -70,12 +75,12 @@ class CustomSearchBar: UISearchBar {
         super.init(coder: aDecoder)
     }
     
-    func indexOfSearchFieldInSubviews() -> Int! {
+    func indexOfSearchFieldInSubviews(type:AnyClass) -> Int! {
         var index:Int!
         let searchBarView = subviews[0]
         
         for i in 0 ..< searchBarView.subviews.count {
-            if searchBarView.subviews[i].isKindOfClass(UITextField){
+            if searchBarView.subviews[i].isKindOfClass(type){
                 index = i
                 break
             }

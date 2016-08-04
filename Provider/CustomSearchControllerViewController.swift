@@ -55,6 +55,7 @@ class CustomSearchControllerViewController: UISearchController,UISearchBarDelega
         
         customSearchBar.barTintColor = bgColor
         customSearchBar.tintColor = textColor
+        
         customSearchBar.showsBookmarkButton = false
         customSearchBar.showsCancelButton = false
         
