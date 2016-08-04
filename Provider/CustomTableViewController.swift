@@ -58,6 +58,9 @@ class CustomTableViewController: UITableViewController {
         //cell.separatorInset = UIEdgeInsetsZero
         let provider = providersArray[indexPath.row]
         cell.UserName.text = provider.model
+        cell.UserAvatar.image = UIImage(named: provider.image)
+        print("The loaded image: \(provider.image)")
+
         return cell
     }
     
@@ -142,13 +145,23 @@ class myCell: UITableViewCell {
     
     let UserAvatar:UIImageView = {
         let avatar = UIImageView()
+        avatar.image = help.reSizeImage(scaledToSize: globalStyle.avatarSize)
+        avatar.layer.cornerRadius = 25.0;
+        avatar.clipsToBounds = true;
+        avatar.translatesAutoresizingMaskIntoConstraints = false
         return avatar
     }()
     
     
     func setupViews(){
         addSubview(UserName)
+        addSubview(UserAvatar)
+        //auotlayout Username
         addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-87.5-[v0(>=100)]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0":UserName]))
         addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[v0(>=25)]", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0":UserName]))
+        
+        //autolayout avatar
+        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-12.5-[v1(<=50)]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v1":UserAvatar]))
+        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-12.5-[v1(<=53)]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v1":UserAvatar]))
     }
 }
