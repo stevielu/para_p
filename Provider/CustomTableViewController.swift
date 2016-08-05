@@ -22,6 +22,7 @@ class CustomTableViewController: UITableViewController {
         self.tableView.rowHeight = 75.0
         self.tableView.separatorColor = globalStyle.backgroundColor
         self.tableView.registerClass(myCell.self, forCellReuseIdentifier: "cellId")
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 37.5, 0)
         loadingContent()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -58,6 +59,27 @@ class CustomTableViewController: UITableViewController {
         //cell.separatorInset = UIEdgeInsetsZero
         let provider = providersArray[indexPath.row]
         cell.UserName.text = provider.model
+        
+        let currentDate = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let today = dateFormatter.stringFromDate(currentDate)
+        
+        let diffDate = help.differenceDate(lateDate: today, earlierDate: dateFormatter.stringFromDate(provider.date))
+        if(diffDate.day == 0){
+            cell.postDate.text = "List Today"
+        }
+        else if(diffDate.day > 7){
+            cell.postDate.text = dateFormatter.stringFromDate(provider.date)
+        }
+        else if(diffDate.day == 1){
+            cell.postDate.text = "Yesterday"
+        }
+        else{
+            cell.postDate.text = String(format: "%d Days Ago", diffDate.day)
+        }
+        cell.subTitle.text = provider.subtitle
+        cell.workType.text = provider.type
         cell.UserAvatar.image = UIImage(named: provider.image)
         print("The loaded image: \(provider.image)")
 
@@ -70,7 +92,7 @@ class CustomTableViewController: UITableViewController {
         let dictArray = NSArray(contentsOfFile: path!)
         
         for providerItem in dictArray! {
-            let newUser : Provider = Provider(type:(providerItem.objectForKey("type")) as! String, maker: (providerItem.objectForKey("maker")) as! String, model: (providerItem.objectForKey("model")) as! String, image: (providerItem.objectForKey("image")) as! String)
+            let newUser : Provider = Provider(type:(providerItem.objectForKey("type")) as! String, date: (providerItem.objectForKey("date")) as! NSDate, model: (providerItem.objectForKey("model")) as! String, image: (providerItem.objectForKey("image")) as! String,subtitle:(providerItem.objectForKey("subtitle")) as! String)
             providersArray.append(newUser)
         }
         
@@ -143,10 +165,37 @@ class myCell: UITableViewCell {
         return nameLabel
     }()
     
+    let postDate:UILabel = {
+        let dateLabel = UILabel()
+        dateLabel.font = globalStyle.dateTitleFont
+        dateLabel.textColor = globalStyle.subTitleColor2
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        return dateLabel
+    }()
+    
+    
+    let subTitle:UILabel = {
+        let TitleLabel = UILabel()
+        TitleLabel.font = globalStyle.dateTitleFont
+        TitleLabel.textColor = globalStyle.subTitleColor2
+        TitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        return TitleLabel
+    }()
+    
+    let workType:UILabel = {
+        let TypeLabel = UILabel()
+        TypeLabel.font = globalStyle.nameTitleFont
+        TypeLabel.textColor = globalStyle.backgroundColor
+        TypeLabel.translatesAutoresizingMaskIntoConstraints = false
+        return TypeLabel
+    }()
+    
     let UserAvatar:UIImageView = {
         let avatar = UIImageView()
         avatar.image = help.reSizeImage(scaledToSize: globalStyle.avatarSize)
         avatar.layer.cornerRadius = 25.0;
+        avatar.layer.borderWidth = 1
+        avatar.layer.borderColor = globalStyle.backgroundColor.CGColor
         avatar.clipsToBounds = true;
         avatar.translatesAutoresizingMaskIntoConstraints = false
         return avatar
@@ -156,12 +205,27 @@ class myCell: UITableViewCell {
     func setupViews(){
         addSubview(UserName)
         addSubview(UserAvatar)
+        addSubview(postDate)
+        addSubview(subTitle)
+        addSubview(workType)
         //auotlayout Username
         addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-87.5-[v0(>=100)]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0":UserName]))
         addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[v0(>=25)]", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0":UserName]))
         
         //autolayout avatar
         addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-12.5-[v1(<=50)]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v1":UserAvatar]))
-        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-12.5-[v1(<=53)]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v1":UserAvatar]))
+        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-12.5-[v1(<=50)]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v1":UserAvatar]))
+        
+        //autolayout date
+        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[v2]-12.5-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v2":postDate]))
+        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[v2(>=25)]", options: NSLayoutFormatOptions(), metrics: nil, views: ["v2":postDate]))
+        
+        //autolayout subtitle
+        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-87.5-[v3(<=140)]", options: NSLayoutFormatOptions(), metrics: nil, views: ["v3":subTitle]))
+        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[v3(>=25)]-12.5-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v3":subTitle]))
+        
+        //autolayout type
+        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[v4(<=120)]-12.5-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v4":workType]))
+        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[v4(>=25)]-12.5-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v4":workType]))
     }
 }

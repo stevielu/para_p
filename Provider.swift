@@ -10,7 +10,8 @@ import Foundation
 
 struct  Provider{
     let type : String
-    let maker : String
+    let date : NSDate
     let model : String
     let image : String
+    let subtitle : String
 }

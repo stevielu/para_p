@@ -29,13 +29,13 @@ class HomeViewController: CustomNavgationbarItemsViewController,UISearchBarDeleg
         
         // Do any additional setup after loading the view.
         configureCustomSearchController()
-        setupSortView()
+        
         
                
         providerTable.tableView.frame = CGRectMake(0, 25, globalStyle.screenSize.width, globalStyle.screenSize.height)
+        setupSortView()
         self.view.addSubview(providerTable.tableView)
-
-
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -138,21 +138,50 @@ class HomeViewController: CustomNavgationbarItemsViewController,UISearchBarDeleg
     
     func defaultSortButtonView(){
         sortByTypeButton.setImage(iconLists.imgBtnType, forState: UIControlState.Normal)
+        sortByTypeButton.enabled = true
         sortByDateButton.setImage(iconLists.imgBtnDate, forState: UIControlState.Normal)
+        sortByDateButton.enabled = true
         sortByLocationButton.setImage(iconLists.imgBtnLocation, forState: UIControlState.Normal)
+        sortByLocationButton.enabled = true
+    }
+    
+    
+    func sortAnimation(){
+        let transition:CATransition = CATransition()
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromTop
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.duration = 0.6;
+        transition.fillMode = kCAFillModeForwards;
+        
+        providerTable.tableView.layer.addAnimation(transition, forKey: "UITableViewReloadDataAnimationKey")
     }
     
     func sortBytype(){
         defaultSortButtonView()
+        sortByTypeButton.setImage(iconLists.imgBtnTypePressed, forState: UIControlState.Normal)
         
+        providerTable.providersArray = providerTable.providersArray.sort({(t1:Provider,t2:Provider) -> Bool in
+            return t1.type.characters.count > t2.type.characters.count
+        })
         
+        sortAnimation()
+        providerTable.tableView.reloadData()
+        sortByTypeButton.enabled = false
+        sortByTypeButton.adjustsImageWhenDisabled = false
     }
     
     func sortBydate(){
+        defaultSortButtonView()
+        sortByDateButton.setImage(iconLists.imgBtnDatePressed, forState: UIControlState.Normal)
         
+        
+
     }
     
     func sortBylocation(){
+        defaultSortButtonView()
+        sortByLocationButton.setImage(iconLists.imgBtnLocationPressed, forState: UIControlState.Normal)
         
     }
     

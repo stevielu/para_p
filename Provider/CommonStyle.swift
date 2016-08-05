@@ -16,10 +16,11 @@ class globalStyle {
 
     //font
     static let subTitleColor = UIColor(netHex:0x666666)
+    static let subTitleColor2 = UIColor(netHex:0x999999)
     static let nameTextColor = UIColor(netHex:0x4C4C4C)
     static let subTitleFontsize = UIFont(name:"Helvetica",size: 10.0)
     static let nameTitleFont = UIFont(name:"Helvetica",size: 15.0)
-    
+    static let dateTitleFont = UIFont(name:"Helvetica",size: 10.0)
     //color
     static let backgroundColor = UIColor(netHex:0xE07371)
     
@@ -27,5 +28,5 @@ class globalStyle {
     static let thickness:CGFloat = 0.5
     
     //image size
-    static let avatarSize =  CGSizeMake(50, 50)
+    static let avatarSize =  CGSizeMake(70, 70)
 }
